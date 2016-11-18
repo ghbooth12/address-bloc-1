@@ -1,12 +1,15 @@
 require_relative 'entry'
 require "csv"
+require "bloc_record/base"
 
-class AddressBook
+class AddressBook < BlocRecord::Base  # Inherit from the base class
   attr_reader :entries
 
-  def initialize
-    @entries = []
-  end
+  # Instance variables are now determined from the database table,
+  # we no longer need initialize or a declaration for @entries.
+  # def initialize
+  #   @entries = []
+  # end
 
   def add_entry(name, phone_number, email)
     index = 0
