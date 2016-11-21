@@ -78,6 +78,16 @@ class MenuController
     print "Search by name: "
     name = gets.chomp
     match = Entry.find_by(:name, name)
+
+    ## TEST for Selection.method_missing()
+    # match = Entry.find_by_name(name)
+    ## TEST for find_each()
+    # Entry.find_each(batch_size: 2) {|match| puts match.to_s}
+    ## TEST for find_in_batches
+    # Entry.find_in_batches(batch_size: 2) do |contacts|
+    #   contacts.each {|contact| puts contact.name}
+    # end
+
     system "clear"
     if match
       puts match.to_s
