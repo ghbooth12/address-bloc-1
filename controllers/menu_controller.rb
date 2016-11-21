@@ -4,11 +4,13 @@ class MenuController
   attr_reader :address_book
 
   def initialize
-    @address_book = AddressBook.new
+    # Instead of creating a new address book object when the program launches,
+    # the existing one in the database will be used.
+    @address_book = AddressBook.first
   end
 
   def main_menu
-    puts "Main Menu - #{address_book.entries.count} entries"
+    puts "#{@address_book.name} Address Book - #{Entry.count} entries."
     puts "1 - View all entries"
     puts "2 - Create an entry"
     puts "3 - Search for an entry"
@@ -46,7 +48,7 @@ class MenuController
   end
 
   def view_all_entries
-    address_book.entries.each do |entry|
+    Entry.all.each do |entry|
       system "clear"
       puts entry.to_s
       entry_submenu(entry)
@@ -66,7 +68,7 @@ class MenuController
     print "Email: "
     email = gets.chomp
 
-    address_book.add_entry(name, phone, email)
+    @address_book.add_entry(name, phone, email)
 
     system "clear"
     puts "New entry created"
@@ -75,7 +77,17 @@ class MenuController
   def search_entries
     print "Search by name: "
     name = gets.chomp
-    match = address_book.binary_search(name)
+    match = Entry.find_by(:name, name)
+
+    ## TEST for Selection.method_missing()
+    # match = Entry.find_by_name(name)
+    ## TEST for find_each()
+    # Entry.find_each(batch_size: 2) {|match| puts match.to_s}
+    ## TEST for find_in_batches
+    # Entry.find_in_batches(batch_size: 2) do |contacts|
+    #   contacts.each {|contact| puts contact.name}
+    # end
+
     system "clear"
     if match
       puts match.to_s
@@ -176,4 +188,3 @@ class MenuController
     end
   end
 end
-
