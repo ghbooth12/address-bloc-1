@@ -3,7 +3,7 @@ require "csv"
 require "bloc_record/base"
 
 class AddressBook < BlocRecord::Base  # Inherit from the base class
-  attr_reader :entries
+  # attr_reader :entries
 
   # Instance variables are now determined from the database table,
   # we no longer need initialize or a declaration for @entries.
@@ -13,6 +13,16 @@ class AddressBook < BlocRecord::Base  # Inherit from the base class
 
   def add_entry(name, phone_number, email)
     Entry.create(address_book_id: self.id, name: name, phone_number: phone_number, email: email)
+  end
+
+  # This returns an array of all of an address book's entries.
+  def entries
+    Entry.where(address_book_id: self.id)
+  end
+
+  # This returns the first entry where name matches a specific name.
+  def find_entry(name)
+    Entry.where(name: name, address_book_id: self.id).first
   end
 
   def import_from_csv(file_name)
