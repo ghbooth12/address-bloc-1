@@ -1,6 +1,7 @@
 require_relative 'entry'
 require "csv"
 require "bloc_record/base"
+require 'pry'
 
 class AddressBook < BlocRecord::Base  # Inherit from the base class
   # attr_reader :entries
