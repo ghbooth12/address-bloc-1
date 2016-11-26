@@ -221,14 +221,27 @@ class MenuController
   end
 
   def not_show
-    results = @address_book.entries
+    # <as4-test>
     # results = Entry.join(:comment).where("comment.body IS NULL")
-
     # results = AddressBook.joins(entry: :comment).where("entry.email IS NULL")
 
     # for i in results
     #   puts "#{i.name}"
     # end
+
+    # <as5-test>
+    # data = {4 => {"phone_number" => "777-777-7777111", "email" => "four111@email.com"}, 5 => {phone_number: "888-888-8888222", email: "five222@email.com"}}
+
+    # results = @address_book.entries.first.class.update(4, phone_number: "444-444-4444", email: "four@email.com")
+    # results = @address_book.entries[1].update_name("Bar")
+
+    results = @address_book.entries.first.class.where(name: "Bar").where(phone_number: "777-777-7777").take(2)
+
+    # results = @address_book.entries.first.class.where(name: "Bar").take(2)
+
     puts results
+    # for i in results
+    #   puts i
+    # end
   end
 end
