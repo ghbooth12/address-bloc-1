@@ -169,8 +169,9 @@ class MenuController
   end
 
   def delete_entry(entry)
-    address_book.entries.delete(entry)
-    puts "#{entry.name} has been deleted"
+    name = entry.name
+    entry.destroy
+    puts "#{name} has been deleted"
   end
 
   def edit_entry(entry)
@@ -235,13 +236,18 @@ class MenuController
     # results = @address_book.entries.first.class.update(4, phone_number: "444-444-4444", email: "four@email.com")
     # results = @address_book.entries[1].update_name("Bar")
 
-    results = @address_book.entries.first.class.where(name: "Bar").where(phone_number: "777-777-7777").take(2)
+    # results = @address_book.entries.first.class.where(name: "Bar").where(phone_number: "777-777-7777").take(2)
 
     # results = @address_book.entries.first.class.where(name: "Bar").take(2)
 
-    puts results
+    # puts results
     # for i in results
     #   puts i
     # end
+
+    # <as6-test>
+    # puts @address_book.entries.first.class.destroy_all
+    puts @address_book.entries.first.class.where(name: "Water")
+    @address_book.entries.first.class.where(name: "Water").destroy_all
   end
 end
